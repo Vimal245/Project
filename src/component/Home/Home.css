@@ -8,10 +8,9 @@
 }
 
 body {
-    background-image: url("C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\bg.png");
+    background-image: url("C:\Users\LENOVO\Desktop\New folder (2)\sample\public\bg.png");
     min-height: 100vh;
     overflow-x: hidden;
-
 }
 
 header {
@@ -30,7 +29,6 @@ header {
     font-size: 2em;
     color: #359381;
     pointer-events: none;
-
 }
 
 .navigation a {
@@ -48,11 +46,12 @@ header {
 }
 
 .Parallax {
-    /* position: relative; */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 
 #text {
@@ -83,7 +82,7 @@ header {
 
 .sec p {
     font-size: 1em;
-    color:#fff;
+    color: #fff;
     font-weight: 300;
 }
 
@@ -93,8 +92,3 @@ header {
 #hill5, #hill4{
     margin-top: -80px;
 }
-/* #leaf {
-    width: 100px;
-    height: 100px;
-    float: right;
-} */

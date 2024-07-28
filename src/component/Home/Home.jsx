@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Home.css';
-// import effect from'./Home.js';
-// import { Link } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
 
 const Home = () => {
+  useEffect(() => {
+    const handleScroll = () => {
+      let value = window.scrollY;
+      document.getElementById('text').style.marginTop = value * 2.5 + 'px';
+      document.getElementById('leaf').style.top = value * -1.5 + 'px';
+      document.getElementById('leaf').style.left = value * 1.5 + 'px';
+      document.getElementById('hill5').style.left = value * 1.5 + 'px';
+      document.getElementById('hill4').style.left = value * -1.5 + 'px';
+      document.getElementById('hill1').style.top = value * 1 + 'px';
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div>
-      {/* <Navbar /> */}
-      <div>
-        <div className="Parallax">
-          <img src="C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\Picsart_24-07-28_01-39-41-683.png" id="hill1" alt="Hill 1" />
-          <img src="C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\Picsart_24-07-28_01-36-45-294.png" id="hill4" alt="Hill 4" />
-          <img src="C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\Picsart_24-07-28_01-29-15-214.png" id="hill5" alt="Hill 5" />
-          <h6 id="text">GET YOUR DAY2DAY <br />THINGS WITHIN MINUTES</h6>
-          <img src="C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\Frame 1 (1).png" id="leaf" alt="Leaf" />
-        </div>
-
-        <section className="sec">
-          <h2>Scroll</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </section>
-        <script src="Home.js"></script>
-      </div>
+      <header>
+        <div className="logo">Logo</div>
+        <nav className="navigation">
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
+        </nav>
+      </header>
+      <section className="Parallax">
+        <img src={`${process.env.PUBLIC_URL}/Picsart_24-07-28_01-39-41-683.png`} id="hill1" alt="hill1" />
+        <img src={`${process.env.PUBLIC_URL}/Picsart_24-07-28_01-36-45-294.png`} id="hill5" alt="hill5" />
+        <img src={`${process.env.PUBLIC_URL}/Picsart_24-07-28_01-29-15-214.png`} id="hill4" alt="hill4" />
+        <h2 id="text">Welcome</h2>
+        <img src={`${process.env.PUBLIC_URL}/Frame 1 (1).png`} id="leaf" alt="leaf" />
+      </section>
+      <section className="sec">
+        <h2>About Us</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </section>
     </div>
   );
 };
