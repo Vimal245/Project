@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url("C:\Users\LENOVO\Desktop\New folder (2)\sample\src\Assets\bg.png");
+    min-height: 100vh;
+    overflow-x: hidden;
+
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 100px;
+    z-index: 100;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2em;
+    color: #359381;
+    pointer-events: none;
+
+}
+
+.navigation a {
+    text-decoration: none;
+    color: #359381;
+    padding: 6px 15px;
+    border-radius: 20px;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+.navigation a:hover, .navigation a.active {
+    background: #359381;
+    color: #fff;
+}
+
+.Parallax {
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#text {
+    position: absolute;
+    color: #c55252;
+    font-size: 3em;
+}
+
+.Parallax img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.sec {
+    position: relative;
+    background: #FFDDF1;
+    padding: 100px;
+}
+
+.sec h2 {
+    font-size: 3em;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.sec p {
+    font-size: 1em;
+    color:#fff;
+    font-weight: 300;
+}
+
+#hill1 {
+    position: fixed;
+}
+#hill5, #hill4{
+    margin-top: -80px;
+}
+/* #leaf {
+    width: 100px;
+    height: 100px;
+    float: right;
+} */
