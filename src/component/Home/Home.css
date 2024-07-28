@@ -8,21 +8,9 @@
 }
 
 body {
-    background-image: url("C:\Users\LENOVO\Desktop\New folder (2)\sample\public\bg.png");
+    background-image: url("C:/Users/LENOVO/Desktop/New folder (2)/sample/public/bg.png");
     min-height: 100vh;
     overflow-x: hidden;
-}
-
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px 100px;
-    z-index: 100;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }
 
 .logo {
@@ -76,7 +64,7 @@ header {
 
 .sec h2 {
     font-size: 3em;
-    color: #fff;
+    color: #9a52ff;
     margin-bottom: 10px;
 }
 
@@ -88,7 +76,30 @@ header {
 
 #hill1 {
     position: fixed;
+    margin-top: 64px;
 }
 #hill5, #hill4{
     margin-top: -80px;
+}
+
+.contain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.content {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.content-vec {
+    flex: 1;
+    text-align: right;
+}
+
+.content-vec img {
+    max-width: 100%;
+    height: auto;
 }
