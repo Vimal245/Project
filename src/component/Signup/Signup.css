@@ -13,6 +13,7 @@
     align-items: center;
     height: 85vh; /* Full height of the viewport */
     padding: 20px;
+    margin-top: 90px;
   }
 
   .image-container {

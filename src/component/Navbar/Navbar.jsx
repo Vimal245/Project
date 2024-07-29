@@ -4,10 +4,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../Navbar/logo.png'; 
 import profileLogo from '../Navbar/profile.png'; // Make sure to import your profile logo
 
 export default function ButtonAppBar() {
+  const navigate = useNavigate(); // Initialize the useNavigate hook
+
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     section.scrollIntoView({ behavior: 'smooth' });
@@ -21,8 +24,8 @@ export default function ButtonAppBar() {
           <Typography variant="h4" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
             QuickBox
           </Typography>
-          <Button color="inherit" sx={{ fontWeight: 'bold', fontSize: '15px' }}>Home</Button>
-          <Button color="inherit" sx={{ fontWeight: 'bold', fontSize: '15px' }}>Shop</Button>
+          <Button component={Link} to="/home" color="inherit" sx={{ fontWeight: 'bold', fontSize: '15px' }}>Home</Button>
+          <Button component={Link} to="/productlist" color="inherit" sx={{ fontWeight: 'bold', fontSize: '15px' }}>Shop</Button>
           <Button 
             color="inherit" 
             sx={{ fontWeight: 'bold', fontSize: '15px' }}
@@ -37,7 +40,12 @@ export default function ButtonAppBar() {
           >
             Contact Us
           </Button>
-          <img src={profileLogo} alt="Profile Logo" style={{ width: 80, height: 80, borderRadius: '50%'}} />
+          <img 
+            src={profileLogo} 
+            alt="Profile Logo" 
+            style={{ width: 80, height: 80, borderRadius: '50%', cursor: 'pointer' }} 
+            onClick={() => navigate('/')} // Add onClick handler to navigate to login page
+          />
         </Toolbar>
       </AppBar>
     </Box>

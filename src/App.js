@@ -18,18 +18,19 @@ const App = () => {
     // <Router>
     //   <div className="App">
     //     <Routes>
-    //       <Route path="/" element={<Login />} />
-    //       <Route path="/signup" element={<SignupForm />} />
     //     </Routes>
     //   </div>
     // </Router> 
-
+    
     <Router>
       <Routes>
-        <Route path="/" element={<ProductList />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/productlist" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-<Route path="/cart" element={<Cart />} />
-<Route path="/checkout" element={<Checkout />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
   );
