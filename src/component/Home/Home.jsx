@@ -45,6 +45,23 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section className="sec" id="Contact-us">
+        <h2>Contact Us</h2>
+        <div className='contain'>
+          <div className='content'><br></br>
+            <p style={{ color: 'black' }}>
+              <b>Address: </b>Thika town, Naltex building, 2nd floor<br></br>
+              <b>Phone: </b>Call us at +91 9999 8888<br></br>
+              <b>Hours: </b>From 8 a.m To 6 p.m<br></br><br></br>
+              <i>We'd love to hear from you! Whether you have questions about our services, need assistance with an order, or simply want to provide feedback, we're here to help.
+At QuickBox, customer satisfaction is our top priority.</i>
+            </p>
+          </div>
+          <div className='content-vec'>
+            <img src={`${process.env.PUBLIC_URL}/Contact.png`} alt="Vector" />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
