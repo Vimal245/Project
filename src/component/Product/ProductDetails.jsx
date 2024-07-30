@@ -33,7 +33,48 @@ const productData = [
     },
     // Add other products similarly
     // ... (same format as above)
-  ];    
+];
+
+// Sample related products data
+const relatedProducts = [
+    {
+      id: 2,
+      name: 'Product 2',
+      price: 49.99,
+      image: '/n7.jpg',
+    },
+    {
+      id: 3,
+      name: 'Product 3',
+      price: 19.99,
+      image: '/n8.jpg',
+    },
+    {
+      id: 4,
+      name: 'Product 4',
+      price: 39.99,
+      image: '/n9.jpg',
+    },
+    {
+      id: 5,
+      name: 'Product 5',
+      price: 59.99,
+      image: '/n10.jpg',
+    },
+    {
+      id: 6,
+      name: 'Product 6',
+      price: 25.99,
+      image: '/n11.jpg',
+    },
+    {
+      id: 7,
+      name: 'Product 7',
+      price: 35.99,
+      image: '/n12.jpg',
+    },
+];
+
 const ProductDetails = () => {
   const { id } = useParams();
   const product = productData.find((p) => p.id === parseInt(id));
@@ -53,7 +94,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div style={{ padding: '20px', backgroundColor: '#FFDDF1' }}>
+    <div style={{ padding: '20px', backgroundColor: '#F5EDED' }}>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
         {/* Left Side: Small Images */}
         <Box sx={{ display: 'flex', flexDirection: 'column', marginRight: '20px' }}>
@@ -64,24 +105,24 @@ const ProductDetails = () => {
           ))}
         </Box>
 
-        {/* Right Side: Product Details and Stores */}
+        {/* Right Side: Product Details and Related Products */}
         <Box sx={{ flex: 1 }}>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {/* Product Details */}
             <Box sx={{ flex: 2 }}>
               <Card sx={{ maxWidth: 600, marginBottom: '20px' }}>
                 <CardMedia component="img" height="400" image={product.image} alt={product.name} />
-                <CardContent>
+                <CardContent sx={{ backgroundColor: '#A8C5E1', color: '#054788' }}>
                   <Typography gutterBottom variant="h4" component="div">
                     {product.name}
                   </Typography>
-                  <Typography variant="h6" color="text.secondary">
+                  <Typography variant="h6">
                     ₹{product.price.toFixed(2)}
                   </Typography>
                   <Typography variant="body1" paragraph>
                     {product.description}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2">
                     <strong>Weight:</strong> {product.additionalDetails.weight}
                     <br />
                     <strong>Dimensions:</strong> {product.additionalDetails.dimensions}
@@ -92,23 +133,30 @@ const ProductDetails = () => {
                   </Typography>
                 </CardContent>
               </Card>
-              <TextField
-                label="Quantity"
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                inputProps={{ min: 1 }}
-                sx={{ marginBottom: '20px', maxWidth: 100 }}
-              />
-              <Button variant="contained" color="primary" size="large" onClick={handleAddToCart} style={{ marginBottom: '20px' }}>
-                Add to Cart
-              </Button>
-              <Button variant="contained" color="secondary" size="large" style={{ marginBottom: '20px', marginLeft: '10px' }}>
-                Buy Now
-              </Button>
-              <IconButton aria-label="add to favorites" style={{ marginBottom: '20px' }}>
-                <FavoriteIcon />
-              </IconButton>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
+                <TextField
+                  label="Quantity"
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  inputProps={{ min: 1 }}
+                  sx={{ maxWidth: 100 }}
+                />
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleAddToCart}
+                  style={{ backgroundColor: '#054788' }}
+                >
+                  Add to Cart
+                </Button>
+                <Button variant="contained" color="secondary" size="large">
+                  Buy Now
+                </Button>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
+              </Box>
               <Divider style={{ margin: '20px 0' }} />
               <Typography variant="h6" style={{ marginBottom: '10px' }}>
                 Reviews:
@@ -142,39 +190,53 @@ const ProductDetails = () => {
               </Box>
             </Box>
 
-            {/* Stores Section */}
-            <Box sx={{ flex: 1, marginLeft: '20px' }}>
+            {/* Related Products */}
+            <Box sx={{ flex: 2, marginLeft: '20px' }}>
               <Typography variant="h6" style={{ marginBottom: '10px' }}>
-                Available in Stores:
+                Related Products:
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                {product.availableInStores.length > 0 ? (
-                  product.availableInStores.map((store, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        padding: '10px',
-                        marginBottom: '10px',
-                        backgroundColor: '#fff',
-                        borderRadius: '5px',
-                        boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
-                      }}
-                    >
-                      <Typography variant="body2" style={{ fontWeight: 'bold' }}>
-                        {store.name}
-                      </Typography>
-                      <Typography variant="body2">{store.location}</Typography>
-                      <Typography variant="body2">
-                        <strong>Stock:</strong> {store.stock}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Distance:</strong> {store.distance}
-                      </Typography>
-                    </Box>
-                  ))
-                ) : (
-                  <Typography variant="body2">Not available in any stores.</Typography>
-                )}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                {relatedProducts.map((relatedProduct, index) => (
+                  <Box key={relatedProduct.id} sx={{ width: 'calc(33% - 20px)', position: 'relative' }}>
+                    <Card sx={{backgroundColor:'#A8C5E1', color: '#054788'}}>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={relatedProduct.image}
+                        alt={relatedProduct.name}
+                      />
+                      <CardContent>
+                        <Typography variant="h6" noWrap>
+                          {relatedProduct.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          ₹{relatedProduct.price.toFixed(2)}
+                        </Typography>
+                      </CardContent>
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                          color: 'white',
+                          textAlign: 'center',
+                          padding: '10px',
+                          opacity: 0,
+                          transition: 'opacity 0.3s ease',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <Button variant="contained" style={{ backgroundColor: '#054788' }}>
+                          Check Now
+                        </Button>
+                      </Box>
+                    </Card>
+                  </Box>
+                ))}
               </Box>
             </Box>
           </div>

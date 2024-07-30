@@ -8,9 +8,12 @@
 }
 
 body {
-    background-image: url("C:/Users/LENOVO/Desktop/New folder (2)/sample/public/bg.png");
     min-height: 100vh;
     overflow-x: hidden;
+}
+.home-bg {
+    background-image: url("C:/Users/LENOVO/Downloads/bbbggg 1.png");
+
 }
 
 .logo {
@@ -44,7 +47,7 @@ body {
 
 #text {
     position: absolute;
-    color: #c55252;
+    color: #6482AD;
     font-size: 3em;
 }
 
@@ -58,13 +61,13 @@ body {
 
 .sec {
     position: relative;
-    background: #FFDDF1;
+    background: #F5EDED;
     padding: 100px;
 }
 
 .sec h2 {
     font-size: 3em;
-    color: #9a52ff;
+    color: #6482AD;
     margin-bottom: 10px;
 }
 

@@ -21,7 +21,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className='home-bg'>
       <Navbar />
       <section className="Parallax">
         <img src={`${process.env.PUBLIC_URL}/Picsart_24-07-28_01-39-41-683.png`} id="hill1" alt="hill1" />
@@ -45,7 +45,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="sec" id="Contact-us">
+      <section className="sec" id="contact-us">
         <h2>Contact Us</h2>
         <div className='contain'>
           <div className='content'><br></br>

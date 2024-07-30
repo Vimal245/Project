@@ -18,7 +18,7 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ bgcolor: '#ffb2e6', color: '#9a52ff' }}>
+      <AppBar position="fixed" sx={{ bgcolor: '#F5EDED', color: '#6482AD' }}>
         <Toolbar>
           <img src={logo} alt="Logo" style={{ width: 60, height: 60, marginRight: 16 }} />
           <Typography variant="h4" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
