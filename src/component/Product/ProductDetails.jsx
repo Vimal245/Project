@@ -2,77 +2,77 @@
 
 import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, CardMedia, CardContent, Typography, Button, IconButton, Divider, Box, TextField } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Button, IconButton, Divider, Box, TextField, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { CartContext } from './CartContext';
 
 // Sample product data
 const productData = [
-    {
-      id: 1,
-      name: 'Product 1',
-      price: 29.99,
-      image: '/n4.jpg',
-      additionalImages: ['/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg'], // Additional images
-      description: 'This is a detailed description of Product 1.',
-      reviews: [
-        { user: 'Alice', comment: 'Great product!', rating: 4 },
-        { user: 'Bob', comment: 'Value for money.', rating: 5 },
-      ],
-      additionalDetails: {
-        weight: '1 kg',
-        dimensions: '10x10x10 cm',
-        manufacturer: 'Company XYZ',
-        warranty: '1 year',
-      },
-      availableInStores: [
-        { name: 'Store A', location: 'Location A', stock: 10, distance: '2 km' },
-        { name: 'Store B', location: 'Location B', stock: 5, distance: '5 km' },
-        { name: 'Store C', location: 'Location C', stock: 20, distance: '10 km' },
-      ], // List of stores
+  {
+    id: 1,
+    name: 'Product 1',
+    price: 29.99,
+    image: '/n4.jpg',
+    additionalImages: ['/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg'], // Additional images
+    description: 'This is a detailed description of Product 1.',
+    reviews: [
+      { user: 'Alice', comment: 'Great product!', rating: 4 },
+      { user: 'Bob', comment: 'Value for money.', rating: 5 },
+    ],
+    additionalDetails: {
+      weight: '1 kg',
+      dimensions: '10x10x10 cm',
+      manufacturer: 'Company XYZ',
+      warranty: '1 year',
     },
-    // Add other products similarly
-    // ... (same format as above)
+    availableInStores: [
+      { name: 'Store A', location: 'Location A', stock: 10, distance: '2 km' },
+      { name: 'Store B', location: 'Location B', stock: 5, distance: '5 km' },
+      { name: 'Store C', location: 'Location C', stock: 20, distance: '10 km' },
+    ], // List of stores
+  },
+  // Add other products similarly
+  // ... (same format as above)
 ];
 
 // Sample related products data
 const relatedProducts = [
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 49.99,
-      image: '/n7.jpg',
-    },
-    {
-      id: 3,
-      name: 'Product 3',
-      price: 19.99,
-      image: '/n8.jpg',
-    },
-    {
-      id: 4,
-      name: 'Product 4',
-      price: 39.99,
-      image: '/n9.jpg',
-    },
-    {
-      id: 5,
-      name: 'Product 5',
-      price: 59.99,
-      image: '/n10.jpg',
-    },
-    {
-      id: 6,
-      name: 'Product 6',
-      price: 25.99,
-      image: '/n11.jpg',
-    },
-    {
-      id: 7,
-      name: 'Product 7',
-      price: 35.99,
-      image: '/n12.jpg',
-    },
+  {
+    id: 2,
+    name: 'Product 2',
+    price: 49.99,
+    image: '/n7.jpg',
+  },
+  {
+    id: 3,
+    name: 'Product 3',
+    price: 19.99,
+    image: '/n8.jpg',
+  },
+  {
+    id: 4,
+    name: 'Product 4',
+    price: 39.99,
+    image: '/n9.jpg',
+  },
+  {
+    id: 5,
+    name: 'Product 5',
+    price: 59.99,
+    image: '/n10.jpg',
+  },
+  {
+    id: 6,
+    name: 'Product 6',
+    price: 25.99,
+    image: '/n11.jpg',
+  },
+  {
+    id: 7,
+    name: 'Product 7',
+    price: 35.99,
+    image: '/n12.jpg',
+  },
 ];
 
 const ProductDetails = () => {
@@ -80,6 +80,8 @@ const ProductDetails = () => {
   const product = productData.find((p) => p.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useContext(CartContext);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedStore, setSelectedStore] = useState(null);
 
   if (!product) {
     return <div>Product not found</div>;
@@ -91,6 +93,19 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleStoreClick = (store) => {
+    setSelectedStore(store);
+    // You can add more logic here, such as navigating to a map or detailed store view
   };
 
   return (
@@ -150,7 +165,7 @@ const ProductDetails = () => {
                 >
                   Add to Cart
                 </Button>
-                <Button variant="contained" color="secondary" size="large">
+                <Button variant="contained" color="secondary" size="large" onClick={handleOpenModal}>
                   Buy Now
                 </Button>
                 <IconButton aria-label="add to favorites">
@@ -242,6 +257,34 @@ const ProductDetails = () => {
           </div>
         </Box>
       </div>
+
+      {/* Modal for Store Information */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>Available in Stores</DialogTitle>
+        <DialogContent>
+          <List>
+            {product.availableInStores.map((store, index) => (
+              <ListItem button key={index} onClick={() => handleStoreClick(store)} sx={{
+                borderRadius: '4px',
+                '&:hover': {
+                  backgroundColor: '#A8C5E1',
+                  color: '#054788',
+                }
+              }}>
+                <ListItemText
+                  primary={store.name}
+                  secondary={`Location: ${store.location} | Stock: ${store.stock} | Distance: ${store.distance}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
