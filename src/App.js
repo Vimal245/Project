@@ -1,5 +1,3 @@
-import Cart from './component/Product/Cart.jsx';
-import Checkout from './component/Product/Checkout.jsx';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../src/component/Login/Login';
@@ -8,10 +6,11 @@ import Navbar from './component/Navbar/Navbar';
 import Home from './component/Home/Home';
 import ProductList from './component/Product/ProductList';
 import ProductDetails from './component/Product/ProductDetails';
+import Payment from './component/Payment/Payment.jsx';
 
 const App = () => {
   return (
-    // <Product></Product>
+    // <Payment></Payment>
     
     // <Home></Home>
     //   <Navbar></Navbar>
@@ -21,7 +20,6 @@ const App = () => {
     //     </Routes>
     //   </div>
     // </Router> 
-    
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -29,8 +27,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
   );

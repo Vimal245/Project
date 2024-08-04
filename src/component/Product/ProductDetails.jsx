@@ -1,11 +1,7 @@
-// src/ProductDetails.js
-
-import React, { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography, Button, IconButton, Divider, Box, TextField, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { CartContext } from './CartContext';
-
 // Sample product data
 const productData = [
   {
@@ -79,9 +75,9 @@ const ProductDetails = () => {
   const { id } = useParams();
   const product = productData.find((p) => p.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
-  const { addToCart } = useContext(CartContext);
   const [openModal, setOpenModal] = useState(false);
   const [selectedStore, setSelectedStore] = useState(null);
+  const navigate = useNavigate();
 
   if (!product) {
     return <div>Product not found</div>;
@@ -93,6 +89,11 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+  };
+
+  const handleBuyNow = () => {
+    // Navigate to the payment page
+    navigate('/payment', { state: { product, quantity } });
   };
 
   const handleOpenModal = () => {
@@ -165,7 +166,7 @@ const ProductDetails = () => {
                 >
                   Add to Cart
                 </Button>
-                <Button variant="contained" color="secondary" size="large" onClick={handleOpenModal}>
+                <Button variant="contained" color="secondary" size="large" onClick={handleBuyNow}>
                   Buy Now
                 </Button>
                 <IconButton aria-label="add to favorites">
@@ -211,9 +212,9 @@ const ProductDetails = () => {
                 Related Products:
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                {relatedProducts.map((relatedProduct, index) => (
+                {relatedProducts.map((relatedProduct) => (
                   <Box key={relatedProduct.id} sx={{ width: 'calc(33% - 20px)', position: 'relative' }}>
-                    <Card sx={{backgroundColor:'#A8C5E1', color: '#054788'}}>
+                    <Card sx={{ backgroundColor: '#A8C5E1', color: '#054788' }}>
                       <CardMedia
                         component="img"
                         height="140"
@@ -224,60 +225,67 @@ const ProductDetails = () => {
                         <Typography variant="h6" noWrap>
                           {relatedProduct.name}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          ₹{relatedProduct.price.toFixed(2)}
-                        </Typography>
+                        <Typography variant="body2">₹{relatedProduct.price.toFixed(2)}</Typography>
                       </CardContent>
-                      <Box
+                      <Button
+                        component={Link}
+                        to={`/product/${relatedProduct.id}`}
+                        size="small"
                         sx={{
                           position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                          color: 'white',
-                          textAlign: 'center',
-                          padding: '10px',
-                          opacity: 0,
-                          transition: 'opacity 0.3s ease',
-                          '&:hover': {
-                            opacity: 1,
-                          },
+                          bottom: '10px',
+                          right: '10px',
+                          backgroundColor: '#054788',
+                          color: '#fff',
                         }}
                       >
-                        <Button variant="contained" style={{ backgroundColor: '#054788' }}>
-                          Check Now
-                        </Button>
-                      </Box>
+                        View
+                      </Button>
                     </Card>
                   </Box>
                 ))}
               </Box>
             </Box>
           </div>
+          <Divider style={{ margin: '20px 0' }} />
+          <div>
+            <Typography variant="h6" style={{ marginBottom: '10px' }}>
+              Available in Stores:
+            </Typography>
+            <List>
+              {product.availableInStores.map((store, index) => (
+                <ListItem key={index} button onClick={() => handleStoreClick(store)}>
+                  <ListItemText
+                    primary={store.name}
+                    secondary={`Location: ${store.location}, Stock: ${store.stock}, Distance: ${store.distance}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </div>
         </Box>
       </div>
-
-      {/* Modal for Store Information */}
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>Available in Stores</DialogTitle>
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+        <DialogTitle>Store Details</DialogTitle>
         <DialogContent>
-          <List>
-            {product.availableInStores.map((store, index) => (
-              <ListItem button key={index} onClick={() => handleStoreClick(store)} sx={{
-                borderRadius: '4px',
-                '&:hover': {
-                  backgroundColor: '#A8C5E1',
-                  color: '#054788',
-                }
-              }}>
-                <ListItemText
-                  primary={store.name}
-                  secondary={`Location: ${store.location} | Stock: ${store.stock} | Distance: ${store.distance}`}
-                />
-              </ListItem>
-            ))}
-          </List>
+          {selectedStore ? (
+            <>
+              <Typography variant="body1">
+                <strong>Name:</strong> {selectedStore.name}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Location:</strong> {selectedStore.location}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Stock:</strong> {selectedStore.stock}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Distance:</strong> {selectedStore.distance}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body1">No store selected.</Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal} color="primary">
@@ -287,6 +295,11 @@ const ProductDetails = () => {
       </Dialog>
     </div>
   );
+};
+
+// Dummy addToCart function to be replaced with actual logic
+const addToCart = (product, quantity) => {
+  console.log(`Added ${quantity} of ${product.name} to cart.`);
 };
 
 export default ProductDetails;
