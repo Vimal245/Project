@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography, Button, IconButton, Divider, Box, TextField, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CartContext from '../Cart/CartContext';
+
 // Sample product data
 const productData = [
   {
     id: 1,
-    name: 'Product 1',
-    price: 29.99,
+    name: 'Men Regular Fit Printed Spread Collar Casual Shirt',
+    price: 329,
     image: '/n4.jpg',
-    additionalImages: ['/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg', '/n5.jpg', '/n6.jpg'], // Additional images
-    description: 'This is a detailed description of Product 1.',
+    additionalImages: ['/n4(1).jpg', '/n4(2).jpg', '/n4(3).jpg', '/n4(4).jpg', '/n4(5).jpg', '/n4(6).jpg'], // Additional images
+    description: 'This garment for the upper body, typically made from fabric such as cotton, polyester, or linen. It generally features a collar, sleeves, and a front opening with buttons or a zipper. Shirts come in various styles and fits, including dress shirts, casual shirts, and T-shirts, catering to different occasions and preferences.',
     reviews: [
       { user: 'Alice', comment: 'Great product!', rating: 4 },
       { user: 'Bob', comment: 'Value for money.', rating: 5 },
     ],
     additionalDetails: {
-      weight: '1 kg',
-      dimensions: '10x10x10 cm',
-      manufacturer: 'Company XYZ',
-      warranty: '1 year',
+      size: 'S M L XL',
+      delivery: 'Friday',
+      manufacturer: 'Tyzlo',
     },
-    availableInStores: [
-      { name: 'Store A', location: 'Location A', stock: 10, distance: '2 km' },
-      { name: 'Store B', location: 'Location B', stock: 5, distance: '5 km' },
-      { name: 'Store C', location: 'Location C', stock: 20, distance: '10 km' },
-    ], // List of stores
   },
   // Add other products similarly
   // ... (same format as above)
@@ -35,39 +31,39 @@ const productData = [
 const relatedProducts = [
   {
     id: 2,
-    name: 'Product 2',
-    price: 49.99,
-    image: '/n7.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 249,
+    image: '/related1.jpg',
   },
   {
     id: 3,
-    name: 'Product 3',
-    price: 19.99,
-    image: '/n8.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 219,
+    image: '/related2.jpg',
   },
   {
     id: 4,
-    name: 'Product 4',
-    price: 39.99,
-    image: '/n9.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 239,
+    image: '/related3.jpg',
   },
   {
     id: 5,
-    name: 'Product 5',
-    price: 59.99,
-    image: '/n10.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 259,
+    image: '/related4.jpg',
   },
   {
     id: 6,
-    name: 'Product 6',
-    price: 25.99,
-    image: '/n11.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 225,
+    image: '/related5.jpg',
   },
   {
     id: 7,
-    name: 'Product 7',
-    price: 35.99,
-    image: '/n12.jpg',
+    name: 'Men Regular Half Sleeve',
+    price: 235,
+    image: '/related6.jpg',
   },
 ];
 
@@ -78,6 +74,7 @@ const ProductDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedStore, setSelectedStore] = useState(null);
   const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext); // Use CartContext
 
   if (!product) {
     return <div>Product not found</div>;
@@ -87,13 +84,9 @@ const ProductDetails = () => {
     setQuantity(parseInt(event.target.value));
   };
 
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-  };
-
   const handleBuyNow = () => {
-    // Navigate to the payment page
-    navigate('/payment', { state: { product, quantity } });
+    addToCart(product, quantity); // Add to cart
+    navigate('/cart');
   };
 
   const handleOpenModal = () => {
@@ -139,13 +132,11 @@ const ProductDetails = () => {
                     {product.description}
                   </Typography>
                   <Typography variant="body2">
-                    <strong>Weight:</strong> {product.additionalDetails.weight}
-                    <br />
-                    <strong>Dimensions:</strong> {product.additionalDetails.dimensions}
+                    <strong>Available sizes:</strong> {product.additionalDetails.size}
                     <br />
                     <strong>Manufacturer:</strong> {product.additionalDetails.manufacturer}
                     <br />
-                    <strong>Warranty:</strong> {product.additionalDetails.warranty}
+                    <strong>Delivery by:</strong> {product.additionalDetails.delivery}
                   </Typography>
                 </CardContent>
               </Card>
@@ -161,12 +152,12 @@ const ProductDetails = () => {
                 <Button
                   variant="contained"
                   size="large"
-                  onClick={handleAddToCart}
                   style={{ backgroundColor: '#054788' }}
+                  onClick={handleBuyNow}
                 >
                   Add to Cart
                 </Button>
-                <Button variant="contained" color="secondary" size="large" onClick={handleBuyNow}>
+                <Button variant="contained" color="secondary" size="large" >
                   Buy Now
                 </Button>
                 <IconButton aria-label="add to favorites">
@@ -248,58 +239,10 @@ const ProductDetails = () => {
             </Box>
           </div>
           <Divider style={{ margin: '20px 0' }} />
-          <div>
-            <Typography variant="h6" style={{ marginBottom: '10px' }}>
-              Available in Stores:
-            </Typography>
-            <List>
-              {product.availableInStores.map((store, index) => (
-                <ListItem key={index} button onClick={() => handleStoreClick(store)}>
-                  <ListItemText
-                    primary={store.name}
-                    secondary={`Location: ${store.location}, Stock: ${store.stock}, Distance: ${store.distance}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </div>
         </Box>
       </div>
-      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-        <DialogTitle>Store Details</DialogTitle>
-        <DialogContent>
-          {selectedStore ? (
-            <>
-              <Typography variant="body1">
-                <strong>Name:</strong> {selectedStore.name}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Location:</strong> {selectedStore.location}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Stock:</strong> {selectedStore.stock}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Distance:</strong> {selectedStore.distance}
-              </Typography>
-            </>
-          ) : (
-            <Typography variant="body1">No store selected.</Typography>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
-};
-
-// Dummy addToCart function to be replaced with actual logic
-const addToCart = (product, quantity) => {
-  console.log(`Added ${quantity} of ${product.name} to cart.`);
 };
 
 export default ProductDetails;

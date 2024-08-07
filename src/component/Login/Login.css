@@ -64,12 +64,12 @@
 }
 
 .login-form p a {
-  color: #9a52ff;
+  color: #F5EDED;
   text-decoration: none;
 }
 
 .login-form p a:hover {
-  color: #6b02fe;
+  color: #3c28eb;
   text-decoration: none;
 }
 
@@ -118,5 +118,5 @@
 }
 
 .login-form button:hover {
-  background-color: #9a52ff;
+  background-color: #3c28eb;
 }

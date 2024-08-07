@@ -7,6 +7,8 @@ import Home from './component/Home/Home';
 import ProductList from './component/Product/ProductList';
 import ProductDetails from './component/Product/ProductDetails';
 import Payment from './component/Payment/Payment.jsx';
+import { CartProvider } from './component/Cart/CartContext.jsx';
+import CartPage from './component/Cart/CartPage.jsx';
 
 const App = () => {
   return (
@@ -20,6 +22,7 @@ const App = () => {
     //     </Routes>
     //   </div>
     // </Router> 
+    <CartProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -27,9 +30,19 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
+    </CartProvider>
+
+
+    // <Router>
+    //   <Routes>
+    //     <Route path="/product/:id" element={<ProductDetails />} />
+    //     <Route path="/payment" element={<Payment />} />
+    //   </Routes>
+    // </Router>
   );
 };
 

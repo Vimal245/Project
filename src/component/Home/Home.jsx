@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './Home.css';
 import Navbar from '../Navbar/Navbar'
+import Footer from '../Footer/Footer';
 
 const Home = () => {
   useEffect(() => {
@@ -62,6 +63,7 @@ At QuickBox, customer satisfaction is our top priority.</i>
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -22,10 +22,25 @@
   margin-bottom: 20px;
 }
 
-.address-container h3,
+.address-container h1,
 .payment-method-container h3 {
   margin-bottom: 10px;
   font-size: 1.5em;
+}
+
+.address-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.address-container input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .address-box {
@@ -111,11 +126,6 @@
 .place-order-button:hover {
   background-color: #9a52ff;
 }
-
-
-
-
-
 
 .thank-you-message {
   position: absolute;

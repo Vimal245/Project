@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import yourImage from 'file:///C:/Users/LENOVO/Downloads/Group%2012 1.svg';
 
@@ -8,15 +8,32 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (email === 'test@example.com' && password === 'password') {
-      alert('Login successful!');
-    } else {
-      setError('Invalid email or password');
+    try {
+      const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Login successful:', data);
+        navigate('/home');
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Invalid email or password');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Failed to fetch. Please check your network and backend server.');
     }
   };
 
@@ -49,7 +66,7 @@ const Login = () => {
                   required
                 />
               </div>
-              <button type="submit" style={{color:'white', textDecoration:'none'}}>Login</button>
+              <button type="submit" style={{ color: 'white', textDecoration: 'none' }}>Login</button>
             </form>
             <p>Don't have an Account? <Link to="/signup" className="signup-link">Signup</Link></p>
           </div>

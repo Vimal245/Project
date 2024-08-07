@@ -9,11 +9,16 @@ import bajaj from '../../Assets/bajaj-finserv.svg';
 import rupay from '../../Assets/bank.png';
 
 const Payment = () => {
+  const [customerName, setCustomerName] = useState('');
   const [address, setAddress] = useState('123 Main St, City, State, 12345');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentDetails, setPaymentDetails] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+
+  const handleNameChange = (e) => {
+    setCustomerName(e.target.value);
+  };
 
   const handleAddressChange = () => {
     const newAddress = prompt('Enter new address:');
@@ -54,7 +59,15 @@ const Payment = () => {
     <div className='payment-bg'>
       <div className="payment-container">
         <div className="address-container">
-          <h3>Delivery Address</h3>
+          <h1>Shipping Details</h1>
+          <label>
+            <input
+              type="text"
+              value={customerName}
+              onChange={handleNameChange}
+              placeholder="Enter your name"
+            />
+          </label>
           <div className="address-box">
             <p>{address}</p>
             <button onClick={handleAddressChange}>Change Address</button>
