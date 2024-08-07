@@ -3,8 +3,8 @@ import { Card, CardMedia, CardContent, Typography, CardActions, Button, TextFiel
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from 'react-router-dom';
-import Footer from '../Footer/Footer';
 import ProductDetails from './ProductDetails';
+import Footer from '../Footer/Footer';
 
 // Sample product data for multiple rows
 const products = [
