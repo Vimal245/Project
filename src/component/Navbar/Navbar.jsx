@@ -56,7 +56,7 @@ export default function ButtonAppBar() {
           <Tooltip title="Category" arrow>
             <Button 
               component={Link} 
-              to="/productlist" 
+              to="/productcategory" 
               color="inherit" 
               sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
             >
@@ -85,13 +85,15 @@ export default function ButtonAppBar() {
           </Tooltip>
           
           <Tooltip title="Wallet" arrow>
-            <Button 
-              color="inherit" 
-              sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
-            >
-              <AccountBalanceWalletIcon sx={{ mr: 1 }} />
-            </Button>
-          </Tooltip>
+  <Button 
+    color="inherit" 
+    sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
+    onClick={() => navigate('/wallet')} // Navigate to wallet page on click
+  >
+    <AccountBalanceWalletIcon sx={{ mr: 1 }} />
+  </Button>
+</Tooltip>
+
           
           <img 
             src={profileLogo} 
