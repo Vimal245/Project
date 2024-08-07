@@ -11,10 +11,6 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 }
-.home-bg {
-    background-image: url("C:/Users/LENOVO/Downloads/bbbggg 1.png");
-
-}
 
 .logo {
     font-size: 2em;
@@ -36,29 +32,6 @@ body {
     color: #fff;
 }
 
-.Parallax {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-}
-
-#text {
-    position: absolute;
-    color: #3d3d3d;
-    font-size: 3em;
-}
-
-.Parallax img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
-}
-
 .sec {
     position: relative;
     background: #F5EDED;
@@ -73,16 +46,8 @@ body {
 
 .sec p {
     font-size: 1em;
-    color: #fff;
+    color: #3d3d3d;
     font-weight: 300;
-}
-
-#hill1 {
-    position: fixed;
-    margin-top: 64px;
-}
-#hill5, #hill4{
-    margin-top: -80px;
 }
 
 .contain {
