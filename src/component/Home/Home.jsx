@@ -105,8 +105,8 @@ const Home = () => {
                   margin: '10px',
                   backgroundColor: '#9FBFDF',
                   '&:hover': {
-                    boxShadow: '10px 10px 10px #4672B1',
-                    transform: 'scale(1.01)',
+                    boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+                    transform: 'translateY(-10px)',
                     transition: 'all 0.3s ease-in-out',
                     padding: '20px',
                   },

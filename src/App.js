@@ -4,7 +4,7 @@ import Login from '../src/component/Login/Login';
 import SignupForm from '../src/component/Signup/Signup';
 import Navbar from './component/Navbar/Navbar';
 import Home from './component/Home/Home';
-import ProductList from './component/Product/ProductList';
+import ProductCategory from './component/Product/ProductCategory';
 import ProductDetails from './component/Product/ProductDetails';
 import Payment from './component/Payment/Payment.jsx';
 import { CartProvider } from './component/Cart/CartContext.jsx';
@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/productlist" element={<ProductCategory />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/payment" element={<Payment />} />
