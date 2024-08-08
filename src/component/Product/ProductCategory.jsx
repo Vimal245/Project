@@ -8,14 +8,15 @@ const ProductCategory = () => {
   const navigate = useNavigate();
 
   const categories = [
-    { title: 'Groceries', imageUrl: '/grocery.png' },
-    { title: 'Fashion', imageUrl: '/fashion.png' },
-    { title: 'Stationary', imageUrl: '/stationary.png' },
-    { title: 'Books', imageUrl: '/books.png' },
+    { title: 'Groceries', imageUrl: '/grocery.png', route: '/grocerylist' },
+    { title: 'Fashion', imageUrl: '/fashion.png', route: '/fashionlist' },
+    { title: 'Stationary', imageUrl: '/stationary.png', route: '/stationarylist' },
+    { title: 'Books', imageUrl: '/books.png', route: '/booklist' },
   ];
 
-  const handleCategoryClick = (category) => {
-    navigate(`/products/${category}`);
+  const handleCategoryClick = (route) => {
+    console.log(`Navigating to: ${route}`);
+    navigate(route);
   };
 
   return (
@@ -33,7 +34,7 @@ const ProductCategory = () => {
             key={index} 
             title={category.title} 
             imageUrl={category.imageUrl}
-            onClick={() => handleCategoryClick(category.title)}
+            onClick={() => handleCategoryClick(category.route)}
           />
         ))}
       </div>
@@ -43,4 +44,3 @@ const ProductCategory = () => {
 };
 
 export default ProductCategory;
-  

@@ -1,13 +1,13 @@
-    import React from 'react';
-    import './CategoryCard.css'; // Make sure this path is correct
+import React from 'react';
+import './CategoryCard.css';
 
-    const CategoryCard = ({ title, imageUrl }) => {
-    return (
-        <div className='category-card'>
-        <img src={imageUrl} alt={title} className='category-card-img' />
-        <h3 className='category-card-title'>{title}</h3>
-        </div>
-    );
-    };
+const CategoryCard = ({ title, imageUrl, onClick }) => {
+  return (
+    <div className='category-card' onClick={onClick} style={{ cursor: 'pointer' }}>
+      <img src={imageUrl} alt={title} style={{ width: '160px', height: '160px' }} />
+      <h2>{title}</h2>
+    </div>
+  );
+};
 
-    export default CategoryCard;
+export default CategoryCard;

@@ -23,8 +23,10 @@ const Wallet = () => {
       <div style={{ padding: '20px' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Wallet</h1>
         <div style={{ maxWidth: '600px', margin: 'auto', padding: '20px', borderRadius: '8px', backgroundColor: '#fff', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-          <h2>Available Balance</h2>
-          <p style={{ fontSize: '24px', fontWeight: 'bold' }}>₹{balance.toFixed(2)}</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2>Available Balance</h2>
+            <p style={{ fontSize: '24px', fontWeight: 'bold' }}>₹{balance.toFixed(2)}</p>
+          </div>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
             <button 
@@ -57,8 +59,10 @@ const Wallet = () => {
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {transactions.map(transaction => (
               <li key={transaction.id} style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-                <div>Date: {transaction.date}</div>
-                <div>Amount: ₹{transaction.amount.toFixed(2)}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Date: {transaction.date}</span>
+                  <span>Amount: ₹{transaction.amount.toFixed(2)}</span>
+                </div>
                 <div>Description: {transaction.description}</div>
               </li>
             ))}
