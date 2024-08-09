@@ -3,12 +3,27 @@ import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import yourImage from 'file:///C:/Users/LENOVO/Downloads/Group%2012 1.svg';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [name, setName] = useState('');
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,15 +40,19 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
+        setName(data.name);
         console.log('Login successful:', data);
-        navigate('/home');
+        setOpen(true); // Show success alert
+        setTimeout(() => navigate('/home'), 2000); // Navigate after showing the alert
       } else {
         const data = await response.json();
         setError(data.message || 'Invalid email or password');
+        setOpen(true); // Show error alert
       }
     } catch (error) {
       console.error('Error:', error);
       setError('Failed to fetch. Please check your network and backend server.');
+      setOpen(true); // Show error alert
     }
   };
 
@@ -68,6 +87,11 @@ const Login = () => {
               </div>
               <button type="submit" style={{ color: 'white', textDecoration: 'none' }}>Login</button>
             </form>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity={error ? "error" : "success"} sx={{ width: '100%' }}>
+                {error ? error : `Welcome ${name}`}
+              </Alert>
+            </Snackbar>
             <p>Don't have an Account? <Link to="/signup" className="signup-link">Signup</Link></p>
           </div>
           <div className="image-container">
