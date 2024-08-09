@@ -13,7 +13,7 @@ import Wallet from './component/Wallet/Wallet.jsx';
 
 const App = () => {
   return (
-    <CartProvider>
+    <CartProvider>i
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />

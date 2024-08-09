@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import './Signup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import yourImage from 'file:///C:/Users/LENOVO/Downloads/Group%2012 1.svg';
+import yourImage from 'file:///C:/Users/LENOVO/Downloads/Group%2012 1.svg'; // Ensure this path is correct
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -12,12 +18,23 @@ const Signup = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setOpen(true);
       return;
     }
 
@@ -32,14 +49,17 @@ const Signup = () => {
 
       if (response.ok) {
         console.log('User Registered');
-        navigate("/home");
+        setOpen(true); // Show success alert
+        setTimeout(() => navigate("/home"), 2000); // Navigate after showing the alert
       } else {
         const data = await response.json();
         setError(data.message || 'Registration failed');
+        setOpen(true); // Show error alert
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred');
+      setOpen(true); // Show error alert
     }
   };
 
@@ -94,6 +114,11 @@ const Signup = () => {
               </div>
               <button type="submit" style={{ color: 'white', textDecoration: 'none' }}>Signup</button>
             </form>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity={error ? "error" : "success"} sx={{ width: '100%' }}>
+                {error ? error : `Welcome ${name}`}
+              </Alert>
+            </Snackbar>
             <p>Already have an Account? <Link to="/" className="login-link">Login</Link></p>
           </div>
           <div className="image-container">
