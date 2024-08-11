@@ -71,10 +71,8 @@ const ProductDetails = () => {
   const { id } = useParams();
   const product = productData.find((p) => p.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedStore, setSelectedStore] = useState(null);
   const navigate = useNavigate();
-  const { addToCart } = useContext(CartContext); // Use CartContext
+  const { addToCart } = useContext(CartContext); 
 
   if (!product) {
     return <div>Product not found</div>;
@@ -85,21 +83,8 @@ const ProductDetails = () => {
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity); // Add to cart
+    addToCart(product, quantity);
     navigate('/cart');
-  };
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const handleStoreClick = (store) => {
-    setSelectedStore(store);
-    // You can add more logic here, such as navigating to a map or detailed store view
   };
 
   return (

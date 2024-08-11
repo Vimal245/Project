@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import './GroceryList.css'; 
+import CartContext from '../Cart/CartContext';
+import './GroceryList.css';
 
 const GroceryList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const [visibleProducts, setVisibleProducts] = useState(8); // Number of products to display initially
+  const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,34 +31,102 @@ const GroceryList = () => {
     fetchProducts();
   }, []);
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterCategory(e.target.value);
+  };
+
+  const handleBuyNow = (product, quantity) => {
+    addToCart(product, quantity);
+    navigate('/cart');
+  };
+
+  const handleQuantityChange = (productId, quantity) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId ? { ...product, quantity } : product
+      )
+    );
+  };
+
+  const handleLoadMore = () => {
+    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 6); // Increase by two rows (each row has 3 products)
+  };
+
+  const filteredProducts = products.filter((product) => {
+    return (
+      product.product_name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (filterCategory === '' || product.category === filterCategory)
+    );
+  });
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className='products-section' style={{ backgroundColor: '#F5F5F5', minHeight: '100vh' }}>
+    <div className='products-section'>
       <Navbar />
       <div style={{ padding: '20px' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '20px', color: '#1254b3' }}>Products List</h1>
-        <div className="products-grid" style={{ maxWidth: '1200px', margin: 'auto', padding: '20px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-          {products.map((product) => (
-            <div className="product-card" key={product.id} style={{ borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+        <div className="search-filter-section">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <select value={filterCategory} onChange={handleFilterChange}>
+            <option value="">All Categories</option>
+            <option value="fruits">Fruits</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="dairy">Dairy</option>
+            <option value="meat">Meat</option>
+            <option value="beverages">Beverages</option>
+          </select>
+        </div>
+        <div className="products-grid">
+          {filteredProducts.slice(0, visibleProducts).map((product) => (
+            <div className="product-card" key={product.id}>
               <Link to={`/product/${product.id}`} className="product-link">
                 <div className="product-photo">
-                  <img src={product.image} alt={product.product_name} style={{ width: '100%', borderRadius: '8px 8px 0 0' }} />
+                  <img src={product.image} alt={product.product_name} />
                 </div>
-                <div className="product-info" style={{ padding: '16px' }}>
-                  <h3 style={{ fontWeight: 'bold', color: '#1254b3' }}>{product.product_name}</h3>
-                  <p style={{ margin: '10px 0', color: '#6482AD' }}>Weight: {product.weight}</p>
-                  <p style={{ color: '#6482AD' }}>₹{product.price.toFixed(2)}</p>
-                  <p style={{ color: '#3362a6' }}>Discount: {product.discount}%</p>
-                  <p style={{ margin: '10px 0', color: '#1254b3' }}>Rating: {product.rating} / 5</p>
-                  <p style={{ color: '#6482AD' }}>{product.description}</p>
+                <div className="product-info">
+                  <h3>{product.product_name}</h3>
+                  <p>Weight: {product.weight}</p>
+                  <p>₹{product.price.toFixed(2)}</p>
+                  <p>Discount: {product.discount}%</p>
+                  <p>Rating: {product.rating} / 5</p>
+                  <p>{product.description}</p>
                 </div>
               </Link>
-              <button className="add-to-cart-button" style={{ backgroundColor: '#6482AD', color: '#fff', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center' }}>Add to Cart</button>
+              <div className="quantity-section">
+                <input
+                  type="number"
+                  min="1"
+                  value={product.quantity || 1}
+                  onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
+                />
+                <button
+                  className="add-to-cart-button"
+                  onClick={() => handleBuyNow(product, product.quantity || 1)}
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))}
         </div>
+        {visibleProducts < filteredProducts.length && (
+          <div className="load-more-section">
+            <button className="load-more-button" onClick={handleLoadMore}>
+              Load More
+            </button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

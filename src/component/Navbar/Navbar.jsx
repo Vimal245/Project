@@ -9,11 +9,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../Navbar/logo.png'; 
-import profileLogo from '../Navbar/profile.png'; // Make sure to import your profile logo
+import profileLogo from '../Navbar/profile.png'; // Import your profile logo
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
-import InfoIcon from '@mui/icons-material/Info';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'; // Cart icon
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'; // Wallet icon
 
 export default function ButtonAppBar() {
@@ -30,7 +29,10 @@ export default function ButtonAppBar() {
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
-    section.scrollIntoView({ behavior: 'smooth' });
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    handleClose(); // Close the menu after navigating
   };
 
   return (
@@ -64,36 +66,25 @@ export default function ButtonAppBar() {
             </Button>
           </Tooltip>
           
-          <Tooltip title="About" arrow>
+          <Tooltip title="Cart" arrow>
             <Button 
               color="inherit" 
               sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
-              onClick={() => scrollToSection('about-us')}
+              onClick={() => navigate('/cart')} // Navigate to cart page on click
             >
-              <InfoIcon sx={{ mr: 1 }} />
-            </Button>
-          </Tooltip>
-          
-          <Tooltip title="Contact Us" arrow>
-            <Button 
-              color="inherit" 
-              sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
-              onClick={() => scrollToSection('contact-us')}
-            >
-              <ContactMailIcon sx={{ mr: 1 }} />
+              <ShoppingCartIcon sx={{ mr: 1 }} />
             </Button>
           </Tooltip>
           
           <Tooltip title="Wallet" arrow>
-  <Button 
-    color="inherit" 
-    sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
-    onClick={() => navigate('/wallet')} // Navigate to wallet page on click
-  >
-    <AccountBalanceWalletIcon sx={{ mr: 1 }} />
-  </Button>
-</Tooltip>
-
+            <Button 
+              color="inherit" 
+              sx={{ fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center' }}
+              onClick={() => navigate('/wallet')} // Navigate to wallet page on click
+            >
+              <AccountBalanceWalletIcon sx={{ mr: 1 }} />
+            </Button>
+          </Tooltip>
           
           <img 
             src={profileLogo} 
@@ -110,6 +101,8 @@ export default function ButtonAppBar() {
           >
             <MenuItem onClick={() => { handleClose(); navigate('/login'); }}>Login</MenuItem>
             <MenuItem onClick={() => { handleClose(); navigate('/signup'); }}>Signup</MenuItem>
+            <MenuItem onClick={() => scrollToSection('about-us')}>About Us</MenuItem>
+            <MenuItem onClick={() => scrollToSection('contact-us')}>Contact Us</MenuItem>
             <MenuItem onClick={() => { handleClose(); /* Add settings functionality here */ }}>Settings</MenuItem>
           </Menu>
           
