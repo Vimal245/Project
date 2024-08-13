@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Payment.css';
 import Modal from './Modal';
+import WalletModal from '../Wallet/WalletModal';
 import mastercard from '../../Assets/card.png';
 import visa from '../../Assets/visa.png';
 import americanExpress from '../../Assets/american-express.png';
 import maestro from '../../Assets/payment.png';
 import bajaj from '../../Assets/bajaj-finserv.svg';
 import rupay from '../../Assets/bank.png';
+import CartContext from '../Cart/CartContext'; // Import CartContext
 
 const Payment = () => {
-  const [customerName, setCustomerName] = useState('');
   const [address, setAddress] = useState('123 Main St, City, State, 12345');
   const [paymentMethod, setPaymentMethod] = useState('');
-  const [paymentDetails, setPaymentDetails] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false); // State for wallet modal
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
 
-  const handleNameChange = (e) => {
-    setCustomerName(e.target.value);
-  };
+  const navigate = useNavigate();
+  const { cart } = useContext(CartContext); // Access cart context
+
+  const walletBalance = 5000;
+  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0); // Calculate total amount
 
   const handleAddressChange = () => {
     const newAddress = prompt('Enter new address:');
@@ -47,11 +52,27 @@ const Payment = () => {
     alert('Payment details submitted!');
   };
 
+  const handleWalletRedirect = () => {
+    setIsWalletModalOpen(true); // Open wallet modal
+  };
+
+  const handleWalletModalClose = () => {
+    setIsWalletModalOpen(false); // Close wallet modal
+  };
+
+  const handleWalletConfirm = () => {
+    setIsWalletModalOpen(false); // Close wallet modal and proceed with wallet payment
+    // Add your wallet payment logic here
+    alert('Payment confirmed from wallet!');
+  };
+
   const handlePlaceOrder = () => {
     // Add order placing logic here
     setIsOrderPlaced(true);
+    setShowThankYouMessage(true);
     setTimeout(() => {
-      setIsOrderPlaced(false);
+      setShowThankYouMessage(false);
+      navigate('/home'); // Redirect to the home page
     }, 3000); // Show the message for 3 seconds
   };
 
@@ -60,14 +81,6 @@ const Payment = () => {
       <div className="payment-container">
         <div className="address-container">
           <h1>Shipping Details</h1>
-          <label>
-            <input
-              type="text"
-              value={customerName}
-              onChange={handleNameChange}
-              placeholder="Enter your name"
-            />
-          </label>
           <div className="address-box">
             <p>{address}</p>
             <button onClick={handleAddressChange}>Change Address</button>
@@ -114,6 +127,7 @@ const Payment = () => {
           </div>
         </div>
         <div className="place-order-container">
+          <button className="wallet-button" onClick={handleWalletRedirect}>Proceed with Wallet</button>
           <button className="place-order-button" onClick={handlePlaceOrder}>Place Order</button>
         </div>
       </div>
@@ -150,17 +164,25 @@ const Payment = () => {
           </div>
         )}
         {paymentMethod === 'UPI' && (
-          <div className="upi-details">
+          <div>
             <label>
-              UPI ID
+              Enter UPI ID
               <input type="text" placeholder="Enter UPI ID" />
             </label>
           </div>
         )}
       </Modal>
 
+      <WalletModal
+        isOpen={isWalletModalOpen}
+        onClose={handleWalletModalClose}
+        walletBalance={walletBalance}
+        totalAmount={totalAmount}
+        onConfirm={handleWalletConfirm}
+      />
+
       {isOrderPlaced && (
-        <div className="thank-you-message">
+        <div className={`thank-you-message ${showThankYouMessage ? 'show' : ''}`}>
           <p>Thank you for your order!</p>
         </div>
       )}
