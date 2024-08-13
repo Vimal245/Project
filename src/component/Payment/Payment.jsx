@@ -1,3 +1,4 @@
+// src/components/Payment/Payment.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Payment.css';
@@ -10,6 +11,7 @@ import maestro from '../../Assets/payment.png';
 import bajaj from '../../Assets/bajaj-finserv.svg';
 import rupay from '../../Assets/bank.png';
 import CartContext from '../Cart/CartContext'; // Import CartContext
+import { WalletContext } from '../Wallet/WalletContext'; // Import WalletContext
 
 const Payment = () => {
   const [address, setAddress] = useState('123 Main St, City, State, 12345');
@@ -21,8 +23,8 @@ const Payment = () => {
 
   const navigate = useNavigate();
   const { cart } = useContext(CartContext); // Access cart context
+  const { balance } = useContext(WalletContext); // Access wallet balance from WalletContext
 
-  const walletBalance = 5000;
   const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0); // Calculate total amount
 
   const handleAddressChange = () => {
@@ -127,7 +129,9 @@ const Payment = () => {
           </div>
         </div>
         <div className="place-order-container">
-          <button className="wallet-button" onClick={handleWalletRedirect}>Proceed with Wallet</button>
+          <button className="wallet-button" onClick={handleWalletRedirect}>
+            Proceed with Wallet
+          </button>
           <button className="place-order-button" onClick={handlePlaceOrder}>Place Order</button>
         </div>
       </div>
@@ -176,7 +180,7 @@ const Payment = () => {
       <WalletModal
         isOpen={isWalletModalOpen}
         onClose={handleWalletModalClose}
-        walletBalance={walletBalance}
+        walletBalance={balance}
         totalAmount={totalAmount}
         onConfirm={handleWalletConfirm}
       />

@@ -1,20 +1,18 @@
-import React from 'react';
+// src/components/Wallet/Wallet.js
+import React, { useContext } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import { WalletContext } from './WalletContext';
 
 const Wallet = () => {
-  // Example data - replace with actual data source
-  const balance = 12050.00; // Example balance in rupees
-  const transactions = [
-    { id: 1, date: '2024-08-01', amount: -2000.00, description: 'Purchase at Store A' },
-    { id: 2, date: '2024-07-30', amount: 5000.00, description: 'Deposit' },
-    { id: 3, date: '2024-07-25', amount: -1000.00, description: 'Purchase at Store B' },
-    // Add more transactions here
-  ];
+  const { balance, transactions, addTransaction } = useContext(WalletContext);
 
   const handleButtonClick = (action) => {
-    // Implement the button click handling logic here
     console.log(action);
+    // Example transaction logic - update as needed
+    if (action === 'addMoney') {
+      addTransaction({ id: Date.now(), date: new Date().toISOString().split('T')[0], amount: 1000.00, description: 'Added Money' });
+    }
   };
 
   return (

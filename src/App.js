@@ -11,10 +11,12 @@ import Payment from './component/Payment/Payment.jsx';
 import { CartProvider } from './component/Cart/CartContext.jsx';
 import CartPage from './component/Cart/CartPage.jsx';
 import Wallet from './component/Wallet/Wallet.jsx';
+import { WalletProvider } from './component/Wallet/WalletContext.jsx';
 
 const App = () => {
   return (
     <CartProvider>
+    <WalletProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -29,6 +31,7 @@ const App = () => {
         <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
+    </WalletProvider>
     </CartProvider>
   );
 };
